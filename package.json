@@ -1,0 +1,22 @@
+{
+  "name": "orugas-at-playwright",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vhanccos/orugas-at-playwright.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vhanccos/orugas-at-playwright/issues"
+  },
+  "homepage": "https://github.com/vhanccos/orugas-at-playwright#readme",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.53.2",
+    "@types/node": "^24.0.10"
+  }
+}
