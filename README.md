@@ -1,3 +1,9 @@
+## Recomendaciones
+Para logearse y guardar usa `node scripts/saveAuth.js`
+Usa `npx playwright test --project="chromium"`
+Para ver reporte `npx playwright show-report` 
+
+
 # para testear 
 - Testeo Universal: **npx playwright test**
 - Testeo a un solo test: **npx playwright test Ejemplo_titulo.spec.ts** (OJO usar con terminaciones **spec.ts**)
@@ -14,10 +20,6 @@
 7. `--ui` Run tests in interactive UI mode
 8. `--ui-host <host>` Host to serve UI on; specifying this option opens UI in a browser tab
 9. `--ui-port <port>` Port to serve UI on, 0 for any free port; specifying this option opens UI in a browser tab
-## Recomendaciones
-Usa `npx playwright test --project=<"chromium"`
 
 
-# Mostrar reporte
-npx playwright show-report 
 
