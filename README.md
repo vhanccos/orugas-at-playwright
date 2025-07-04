@@ -1,5 +1,7 @@
 ## Recomendaciones
-Para logearse y guardar usa `node scripts/saveAuth.js`
+Para logearse y guardar usa `node scripts/saveAuth.js` (desde la ruta base)
+Para validar el logeo manualmente `node scripts/checkAuth.js` (desde la ruta base)
+
 Usa `npx playwright test --project="chromium"`
 Para ver reporte `npx playwright show-report` 
 
