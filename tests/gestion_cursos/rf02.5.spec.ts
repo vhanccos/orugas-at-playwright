@@ -8,7 +8,7 @@ import path from 'path';
 const storagePath = path.resolve('auth/storageState.json');
 const urlBase = 'https://teammates-orugas.appspot.com/';
 const nombre = "rf02.5";
-const carpetaBase = path.join("gestion_cursos","capturas",nombre);
+const carpetaBase = path.join("capturas","gestion_cursos",nombre);
 const courseId = 'jcuadrosam.uns-demo';  //Cambiar id para esta prueba (personal)
 
 // validar el login inicial
@@ -26,7 +26,7 @@ test.use({
   	storageState: storagePath
 });
 
-test.only('rf02.5-01 (Visualización de curso con gran número de inscritos) [TD de estados]', async ({ page }) => {
+test.only('rf02.5-01 (Visualización de curso con gran número de inscritos) [T de estados]', async ({ page }) => {
     const contador = { valor: 0 };
     const casosPrueba = "rf02.5-01";
 
@@ -50,7 +50,7 @@ test.only('rf02.5-01 (Visualización de curso con gran número de inscritos) [TD
 
 });
 
-test.only('rf02.5-02 (Descargar de un curso con gran número de inscritos) [TD de estados]', async ({ page }) => {
+test.only('rf02.5-02 (Descargar de un curso con gran número de inscritos) [T de estados]', async ({ page }) => {
     const contador = { valor: 0 };
     const casosPrueba = "rf02.5-02";
     
