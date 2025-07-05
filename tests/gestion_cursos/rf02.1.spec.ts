@@ -46,13 +46,13 @@ test.only('rf02.1-01 (Creación exitosa de un curso con todos los campos válido
 	// 3. Completar formulario
     await page.fill('input[name="courseId"]', datos_entrada.courseId);
     await page.fill('input[name="courseName"]', datos_entrada.courseName);
-	await esperaTiempo(2500);
+	await esperaTiempo(1500);
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	await expect(page.locator('button', { hasText: 'Add Course' })).toBeVisible();
 	await page.click('text=Add Course');
 
 	// 4. Respuesta 
-	await esperaTiempo(2500);
+	await esperaTiempo(1500);
 	const mensaje = await page.locator('div.toast-body').innerText();
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	expect(mensaje).toContain('has been added');
@@ -88,13 +88,13 @@ test.only('rf02.1-03 (Creación fallida al ser el código del curso repetido) [T
 	// 3. Completar formulario
     await page.fill('input[name="courseId"]', datos_entrada.courseId);
     await page.fill('input[name="courseName"]', datos_entrada.courseName);
-	await esperaTiempo(2500); 
+	await esperaTiempo(1500); 
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	await expect(page.locator('button', { hasText: 'Add Course' })).toBeVisible();
 	await page.click('text=Add Course');
 
 	// 4. Respuesta 
-	await esperaTiempo(2500); 
+	await esperaTiempo(1500); 
 	const mensaje = await page.locator('div.toast-body').innerText();
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	expect(mensaje).not.toContain('has been added');
@@ -119,7 +119,7 @@ test.only('rf02.1-04 (Creación fallida al ser el nombre del curso vacío) [TD(i
 	// 3. Completar formulario
     await page.fill('input[name="courseId"]', datos_entrada.courseId);
     await page.fill('input[name="courseName"]', datos_entrada.courseName);
-	await esperaTiempo(2500); 
+	await esperaTiempo(1500); 
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	await expect(page.locator('button', { hasText: 'Add Course' })).toBeDisabled();
 });
@@ -143,7 +143,7 @@ test.only('rf02.1-05 (Creación fallida al ser el nombre del curso vacío y cód
 	// 3. Completar formulario
     await page.fill('input[name="courseId"]', datos_entrada.courseId);
     await page.fill('input[name="courseName"]', datos_entrada.courseName);
-	await esperaTiempo(2500);  // Esperar carga 
+	await esperaTiempo(1500);  // Esperar carga 
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	await expect(page.locator('button', { hasText: 'Add Course' })).toBeDisabled();
 });
@@ -167,7 +167,7 @@ test.only('rf02.1-06 (Creación fallida al ser el código del curso vacío) EP(i
 	// 3. Completar formulario
     await page.fill('input[name="courseId"]', datos_entrada.courseId);
     await page.fill('input[name="courseName"]', datos_entrada.courseName);
-	await esperaTiempo(2500);  // Esperar carga 
+	await esperaTiempo(1500);  // Esperar carga 
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	await expect(page.locator('button', { hasText: 'Add Course' })).toBeDisabled();
 });
@@ -190,13 +190,13 @@ test.only('rf02.1-07 (Creación exitosa de un curso con todos los campos válido
 	// 3. Completar formulario
     await page.fill('input[name="courseId"]', datos_entrada.courseId);
     await page.fill('input[name="courseName"]', datos_entrada.courseName);
-	await esperaTiempo(2500); 
+	await esperaTiempo(1500); 
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	await expect(page.locator('button', { hasText: 'Add Course' })).toBeVisible();
 	await page.click('text=Add Course');
 
 	// 4. Respuesta 
-	await esperaTiempo(2500);
+	await esperaTiempo(1500);
 	const mensaje = await page.locator('div.toast-body').innerText();
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	expect(mensaje).toContain('has been added');
@@ -221,7 +221,7 @@ test.only('rf02.1-08 (Creación fallida al ser el código del curso mayor a 64 c
 	// 3. Completar formulario
     await page.fill('input[name="courseId"]', datos_entrada.courseId);
     await page.fill('input[name="courseName"]', datos_entrada.courseName);
-	await esperaTiempo(2500);
+	await esperaTiempo(1500);
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	await expect(page.locator('input[name="courseId"]')).not.toHaveValue(datos_entrada.courseId); //no se copio todo
 });
@@ -245,13 +245,13 @@ test.only('rf02.1-09 (Creación fallida al ser el código del curso con espacio)
 	// 3. Completar formulario
     await page.fill('input[name="courseId"]', datos_entrada.courseId);
     await page.fill('input[name="courseName"]', datos_entrada.courseName);
-	await esperaTiempo(2500);
+	await esperaTiempo(1500);
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	await expect(page.locator('button', { hasText: 'Add Course' })).toBeVisible();
 	await page.click('text=Add Course');
 
 	// 4. Respuesta 
-	await esperaTiempo(2500);
+	await esperaTiempo(1500);
 	const mensaje = await page.locator('div.toast-body').innerText();
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 	expect(mensaje).not.toContain('has been added');
