@@ -8,7 +8,7 @@ import path from 'path';
 const storagePath = path.resolve('auth/storageState.json');
 const urlBase = 'https://teammates-orugas.appspot.com/';
 const nombre = "rf02.5";
-const carpetaBase = path.join("capturas",nombre);
+const carpetaBase = path.join("gestion_cursos","capturas",nombre);
 const courseId = 'jcuadrosam.uns-demo';  //Cambiar id para esta prueba (personal)
 
 // validar el login inicial
