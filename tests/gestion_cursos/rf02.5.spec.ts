@@ -7,8 +7,9 @@ import path from 'path';
 
 const storagePath = path.resolve('auth/storageState.json');
 const urlBase = 'https://teammates-orugas.appspot.com/';
-const nombre = "rf02.4";
+const nombre = "rf02.5";
 const carpetaBase = path.join("capturas",nombre);
+const courseId = 'jcuadrosam.uns-demo';  //Cambiar id para esta prueba (personal)
 
 // validar el login inicial
 test.beforeAll(() => {
@@ -25,9 +26,33 @@ test.use({
   	storageState: storagePath
 });
 
-test.only('rf02.4-01 (Archivar exitosamente un curso) [TD(valida)]', async ({ page }) => {
+test.only('rf02.5-01 (Visualización de curso con gran número de inscritos) [TD de estados]', async ({ page }) => {
     const contador = { valor: 0 };
-    const casosPrueba = "rf02.4-01";
+    const casosPrueba = "rf02.5-01";
+
+    // 1. Cargar la pagina inicial
+    await page.goto(urlBase + 'web/instructor/home'); //url inicial
+    await CargaCompleta(page); // Esperar carga 
+    await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
+    await expect(page.locator('a', { hasText: 'Courses' })).toBeVisible(); 
+    
+    // 2. Carga courses 
+    await page.click('text=Courses'); //hacer click
+    await esperaTiempo(1500);
+    const fila = page.locator('tr', { hasText: courseId });
+    await fila.locator('button', { hasText: 'Other Actions' }).click();
+    await fila.locator('.dropdown-menu.show').waitFor();
+    await fila.locator('a', { hasText: 'View' }).click();
+    
+    // 3. Guardar captura
+    await esperaTiempo(1500);
+    await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
+
+});
+
+test.only('rf02.5-02 (Descargar de un curso con gran número de inscritos) [TD de estados]', async ({ page }) => {
+    const contador = { valor: 0 };
+    const casosPrueba = "rf02.5-02";
     
     // 1. Cargar la pagina inicial
     await page.goto(urlBase + 'web/instructor/home'); //url inicial
@@ -38,41 +63,25 @@ test.only('rf02.4-01 (Archivar exitosamente un curso) [TD(valida)]', async ({ pa
     // 2. Carga courses 
     await page.click('text=Courses'); //hacer click
     await esperaTiempo(1500);
-    await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
-    const courseId = await page.locator('#course-id-0').innerText();
-    await page.click('#btn-other-actions-0'); //hacer click
-    await page.click('#btn-archive-0'); //hacer click    
-
-    // 3. Respuesta 
-    await esperaTiempo(1500);
-    const mensaje = await page.locator('div.toast-body').innerText();
-    await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
-    expect(mensaje).toContain('has been archived');    
-});
-
-test.only('rf02.4-02 (Estudiante intenta archivar un curso) [TD(invalida)]', async ({ page }) => {
-    const contador = { valor: 0 };
-    const casosPrueba = "rf02.4-02";
-    // 1. Cargar la pagina inicial
-    await page.goto(urlBase + 'web/student/home'); //url inicial
-    await CargaCompleta(page); // Esperar carga 
-    await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
-    await expect(page.locator('a', { hasText: 'Courses' })).toHaveCount(0);        
-});
-
-test.only('rf02.4-03 (Intento de archivar de un instructor sin permisos) [TD(invalida)]', async ({ page }) => {
-    const contador = { valor: 0 };
-    const casosPrueba = "rf02.4-03";
-    // 1. Cargar la pagina inicial
-    await page.goto(urlBase + 'web/instructor/home'); //url inicial
-    await CargaCompleta(page); // Esperar carga 
-    await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
-
-    await expect(page.locator('a', { hasText: 'Courses' })).toBeVisible(); 
+    const fila = page.locator('tr', { hasText: courseId });
+    await fila.locator('button', { hasText: 'Other Actions' }).click();
+    await fila.locator('.dropdown-menu.show').waitFor();
+    await fila.locator('a', { hasText: 'View' }).click();
     
-    // 2. Carga courses 
-    await page.click('text=Courses'); //hacer click
+    // 3. Guardar captura
     await esperaTiempo(1500);
     await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
-    await expect(page.locator('a[href="/web/instructor/courses/enroll?courseid=vhanccos.uns-demo"]')).toHaveCount(0);
+
+    // 4. descargar
+    const [ download ] = await Promise.all([
+        page.waitForEvent('download'),
+        page.click('#btn-download'),
+    ]);
+    // 5. guardar el csv
+    const filePath = path.join(carpetaBase, 'student_list.csv');
+    await download.saveAs(filePath);
+
+    const suggestedFileName = download.suggestedFilename();
+    expect(suggestedFileName).toContain('.csv');
+
 });

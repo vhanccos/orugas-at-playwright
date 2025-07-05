@@ -8,7 +8,7 @@ import path from 'path';
 const storagePath = path.resolve('auth/storageState.json');
 const urlBase = 'https://teammates-orugas.appspot.com/';
 const nombre = "rf02.3";
-const carpetaBase = path.join("capturas",nombre)
+const carpetaBase = path.join("capturas",nombre);
 
 // validar el login inicial
 test.beforeAll(() => {
