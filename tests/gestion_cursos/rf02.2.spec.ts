@@ -26,9 +26,9 @@ test.use({
 });
 
 test.only('rf02.2-01 (Edición exitosa del nombre) [TD(valida)]', async ({ page }) => {
-    const datos_entrada = {courseName: "Programación II"};
+    const datos_entrada = {courseName: "Programación VII"};
     const contador = { valor: 0 };
-    const casosPrueba = "rf02.1-01";
+    const casosPrueba = "rf02.2-01";
     
     // 1. Cargar la pagina inicial
     await page.goto(urlBase + 'web/instructor/home'); //url inicial
@@ -59,10 +59,10 @@ test.only('rf02.2-01 (Edición exitosa del nombre) [TD(valida)]', async ({ page 
     expect(mensaje).toContain('has been edited');
 });
 
-test.only('rf02.2-02 (Error al intentar editar con un nombre vacío) [TD(valida)]', async ({ page }) => {
+test.only('rf02.2-02 (Error al intentar editar con un nombre vacío) [TD(invalida)]', async ({ page }) => {
     const datos_entrada = {courseName: ""};
     const contador = { valor: 0 };
-    const casosPrueba = "rf02.1-02";
+    const casosPrueba = "rf02.2-02";
     
     // 1. Cargar la pagina inicial
     await page.goto(urlBase + 'web/instructor/home'); //url inicial
@@ -87,9 +87,9 @@ test.only('rf02.2-02 (Error al intentar editar con un nombre vacío) [TD(valida)
     await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
 });
 
-test.only('rf02.2-03 (Error al intentar editar) [TD(valida)]', async ({ page }) => {
+test.only('rf02.2-03 (Error al intentar editar) [TD(invalida)]', async ({ page }) => {
     const contador = { valor: 0 };
-    const casosPrueba = "rf02.1-03";
+    const casosPrueba = "rf02.2-03";
     // 1. Cargar la pagina inicial
     await page.goto(urlBase + 'web/student/home'); //url inicial
     await CargaCompleta(page); // Esperar carga 
