@@ -48,7 +48,7 @@ test.only('rf02.1-01 (Creación exitosa de un curso con todos los campos válido
     await page.fill('input[name="courseName"]', datos_entrada.courseName);
 	await esperaTiempo(1500);
 	await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
-	await expect(page.locator('button', { hasText: 'Add Course' })).toBeVisible();
+	await expect(page.locator('button', { hasText: 'Add Course' })).toBeEnabled();
 	await page.click('text=Add Course');
 
 	// 4. Respuesta 
@@ -101,7 +101,7 @@ test.only('rf02.1-03 (Creación fallida al ser el código del curso repetido) [T
 });
 
 test.only('rf02.1-04 (Creación fallida al ser el nombre del curso vacío) [TD(invalida)]', async ({ page }) => {
-	const datos_entrada = {courseName: "", courseId: "INF203"};
+	const datos_entrada = {courseName: "", courseId: "INF203"+unico};
 	const contador = { valor: 0 };
 	const casosPrueba = "rf02.1-04";
 
