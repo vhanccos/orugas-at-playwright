@@ -36,59 +36,125 @@ test.only("rf07.2-01 (Visualizar detalles completos de un estudiante con todos l
 
   const contador = { valor: 0 };
   const casosPrueba = "rf07.2-01";
+  const courseId = "C-RF7.2";
+  const courseName = "C-RF7.2";
 
-  // 1. Cargar la pagina inicial
-  await page.goto(urlBase + "web/instructor/home"); //url inicial
-  await CargaCompleta(page); // Esperar carga
-
-  // 2. Ir a detalles del curso y eliminar si ya existe
-  await page.goto(urlBase + "web/instructor/courses/details?courseid=C001");
-  await CargaCompleta(page);
-  await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
-  await eliminarEstudianteSiExiste(
-    page,
-    datos_entrada.email,
-    carpetaBase,
-    contador,
-    casosPrueba,
-  );
-
-  // 3. Ir al formulario de inscripción
-  await page.goto(urlBase + "web/instructor/courses/enroll?courseid=C001");
+  // 1. Cargar la página inicial
+  await page.goto(urlBase + "web/instructor/home");
   await CargaCompleta(page);
   await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 
-  // 4. Llenar el formulario de inscripción
-  await page.locator("#newStudentsHOT td").first().dblclick();
-  await page.locator("textarea").fill(datos_entrada.section);
+  // 2. Verificar si el curso "C-RF7.2" existe, si no, crearlo
+  await page.goto(urlBase + "web/instructor/courses");
+  await CargaCompleta(page);
 
-  await page.locator("td:nth-child(3)").first().dblclick();
-  await page.locator("textarea").fill(datos_entrada.team);
+  const existeCurso = await page
+    .locator("#active-courses-table")
+    .getByText(courseId)
+    .count();
+  if (existeCurso === 0) {
+    await page.getByRole("button", { name: "+ Add New Course" }).click();
+    await page.getByRole("textbox", { name: "Course ID:" }).fill(courseId);
+    await page.getByRole("textbox", { name: "Course Name:" }).fill(courseName);
+    await page.getByRole("button", { name: "Add Course" }).click();
+    await CargaCompleta(page);
+    await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
+  }
 
-  await page.locator("td:nth-child(4)").first().dblclick();
-  await page.locator("textarea").fill(datos_entrada.name);
-
-  await page.locator("td:nth-child(5)").first().dblclick();
-  await page.locator("textarea").fill(datos_entrada.email);
-
-  await page.locator("td:nth-child(6)").first().dblclick();
-  await page.locator("textarea").fill(datos_entrada.comment);
-
+  // 3. Verificar si el curso tiene estudiantes, si no, inscribir uno
+  await page.goto(
+    urlBase + "web/instructor/courses/details?courseid=" + courseId,
+  );
+  await CargaCompleta(page);
   await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 
-  // 5. Enviar el formulario
-  await page.getByRole("button", { name: "Enroll students" }).click();
+  const sinEstudiantes =
+    (await page.locator("text=Total students: 0").count()) > 0;
+  if (sinEstudiantes) {
+    await page.goto(
+      urlBase + "web/instructor/courses/enroll?courseid=" + courseId,
+    );
+    await CargaCompleta(page);
+
+    await page.locator("#newStudentsHOT td").first().dblclick();
+    await page.locator("textarea").fill(datos_entrada.section);
+    await page.locator("td:nth-child(3)").first().dblclick();
+    await page.locator("textarea").fill(datos_entrada.team);
+    await page.locator("td:nth-child(4)").first().dblclick();
+    await page.locator("textarea").fill(datos_entrada.name);
+    await page.locator("td:nth-child(5)").first().dblclick();
+    await page.locator("textarea").fill(datos_entrada.email);
+    await page.locator("td:nth-child(6)").first().dblclick();
+    await page.locator("textarea").fill(datos_entrada.comment);
+
+    await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
+
+    await page.getByRole("button", { name: "Enroll students" }).click();
+    await expect(page.getByRole("alert")).toContainText(
+      "Enrollment successful",
+      { timeout: 10000 },
+    );
+
+    await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
+
+    await page.goto(
+      urlBase + "web/instructor/courses/details?courseid=" + courseId,
+    );
+    await CargaCompleta(page);
+    await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
+  }
+
+  // 4. Visualizar los detalles del estudiante (se abre en una nueva pestaña)
+  const [page1] = await Promise.all([
+    page.context().waitForEvent("page"),
+    page.getByRole("link", { name: "View" }).click(),
+  ]);
+  await page1.waitForLoadState("load");
+  await CargaCompleta(page1);
+  await Guardar_imagen(page1, carpetaBase, contador, casosPrueba);
+
+  await expect(page1.locator("#main-content")).toContainText(
+    `${datos_entrada.name}Enrollment DetailsCourse${courseId}Section Name${datos_entrada.section}Team Name${datos_entrada.team}Official Email${datos_entrada.email}Comments${datos_entrada.comment}`,
+  );
+  await Guardar_imagen(page1, carpetaBase, contador, casosPrueba);
+});
+
+test.only("rf07.2-02 (Intentar visualizar detalles en curso sin estudiantes) [CU]", async ({
+  page,
+}) => {
+  const contador = { valor: 0 };
+  const casosPrueba = "rf07.2-02";
+  const courseId = "C-RF7.2-02";
+  const courseName = "C-RF7.2-02";
+
+  // 1. Cargar la página inicial
+  await page.goto(urlBase + "web/instructor/home");
+  await CargaCompleta(page);
   await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 
-  // 6. Validar la respuesta
-  await expect(page.getByRole("alert")).toContainText(
-    "Enrollment successful. Summary given below.",
-    { timeout: 10000 },
-  );
-  await Guardar_imagen(page, carpetaBase, contador, casosPrueba); // Captura tras alerta
+  // 2. Verificar si el curso "C-RF7.2-02" existe, si no, crearlo
+  await page.goto(urlBase + "web/instructor/courses");
+  await CargaCompleta(page);
 
-  await expect(page.locator("#results-panel")).toContainText(
-    `1 student(s) added: SectionTeamStudent NameE-mail addressComments${datos_entrada.section}${datos_entrada.team}${datos_entrada.name}${datos_entrada.email}${datos_entrada.comment}`,
+  const existeCurso = await page
+    .locator("#active-courses-table")
+    .getByText(courseId)
+    .count();
+  if (existeCurso === 0) {
+    await page.getByRole("button", { name: "+ Add New Course" }).click();
+    await page.getByRole("textbox", { name: "Course ID:" }).fill(courseId);
+    await page.getByRole("textbox", { name: "Course Name:" }).fill(courseName);
+    await page.getByRole("button", { name: "Add Course" }).click();
+    await CargaCompleta(page);
+    await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
+  }
+
+  // 3. Ir a los detalles del curso y validar que no haya estudiantes
+  await page.goto(urlBase + "web/instructor/students");
+  await CargaCompleta(page);
+  await page.getByText("[C-RF7.2-02]: C-RF7.2-02").click();
+  await expect(page.locator("h5")).toContainText(
+    "There are no students in this course.",
   );
-  await Guardar_imagen(page, carpetaBase, contador, casosPrueba); // Captura tras ver resultados
+  await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 });
