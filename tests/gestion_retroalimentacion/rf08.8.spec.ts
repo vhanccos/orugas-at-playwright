@@ -37,7 +37,7 @@ test.only('rf08.8-01 (Eliminación permanente exitosa de una sesión eliminada) 
     await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
     await expect(page.locator('a', { hasText: 'Sessions' })).toBeVisible(); 
 
-	// 2. Carga feedback
+	// 2. Carga sessions
 	await page.click('text=Sessions'); //hacer click
 	const expandBtn = page.locator('#deleted-sessions-heading button.chevron');
 	await expect(expandBtn).toBeVisible();
@@ -71,7 +71,7 @@ test.only('rf08.8-02 (Cancelación de la eliminación permanente tras diálogo d
     await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
     await expect(page.locator('a', { hasText: 'Sessions' })).toBeVisible(); 
 
-	// 2. Carga feedback
+	// 2. Carga sessions
 	await page.click('text=Sessions'); //hacer click
 	const expandBtn = page.locator('#deleted-sessions-heading button.chevron');
 	await expect(expandBtn).toBeVisible();
@@ -105,7 +105,7 @@ test.only('rf08.8-03 (Combinación válida: usuario autorizado, sesión válida,
     await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
     await expect(page.locator('a', { hasText: 'Sessions' })).toBeVisible(); 
 
-	// 2. Carga feedback
+	// 2. Carga sessions
 	await page.click('text=Sessions'); //hacer click
 	const expandBtn = page.locator('#deleted-sessions-heading button.chevron');
 	await expect(expandBtn).toBeVisible();
@@ -139,7 +139,7 @@ test.only('rf08.8-04 (Combinación inválida: usuario autorizado, sesión válid
     await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
     await expect(page.locator('a', { hasText: 'Sessions' })).toBeVisible(); 
 
-	// 2. Carga feedback
+	// 2. Carga sessions
 	await page.click('text=Sessions'); //hacer click
 	const expandBtn = page.locator('#deleted-sessions-heading button.chevron');
 	await expect(expandBtn).toBeVisible();

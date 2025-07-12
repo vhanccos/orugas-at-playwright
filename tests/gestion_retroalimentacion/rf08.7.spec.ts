@@ -37,7 +37,7 @@ test.only('rf08.7-01 (Restaurar correctamente una sesión eliminada) [Casos de U
     await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
     await expect(page.locator('a', { hasText: 'Sessions' })).toBeVisible(); 
 
-    // 2. Carga feedback
+    // 2. Carga sessions
     await page.click('text=Sessions'); //hacer click
     const expandBtn = page.locator('#deleted-sessions-heading button.chevron');
     await expect(expandBtn).toBeVisible();
