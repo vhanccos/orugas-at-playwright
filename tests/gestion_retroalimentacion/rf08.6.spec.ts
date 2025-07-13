@@ -60,30 +60,9 @@ test.only('rf08.6-02 (Usuario sin permisos intenta acceder a sesiones eliminadas
     await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
     await expect(page.locator('a', { hasText: 'Sessions' })).toHaveCount(0);    
 });
-test.only('rf08.6-03 (Consultar detalles de una sesión eliminada) [Casos de Uso]', async ({ page }) => {
+test.only('rf08.6-03 (Acceder a la lista cuando no hay sesiones eliminadas) [Casos de Uso]', async ({ page }) => {
     const contador = { valor: 0 };
     const casosPrueba = "rf08.6-03";
-    
-    // 1. Cargar la pagina inicial
-    await page.goto(urlBase + 'web/instructor/home'); //url inicial
-    await CargaCompleta(page); // Esperar carga 
-    await Guardar_imagen(page, carpetaBase, contador, casosPrueba); 
-    await expect(page.locator('a', { hasText: 'Sessions' })).toBeVisible(); 
-
-    // 2. Carga sessions
-    await page.click('text=Sessions'); //hacer click
-    const expandBtn = page.locator('#deleted-sessions-heading button.chevron');
-    await expect(expandBtn).toBeVisible();
-    await expandBtn.click();
-
-    // 3. Resultados
-    await page.keyboard.press('End'); //Bajar hasta abajo
-    await esperaTiempo(2000);
-    await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
-});
-test.only('rf08.6-04 (Acceder a la lista cuando no hay sesiones eliminadas) [Casos de Uso]', async ({ page }) => {
-    const contador = { valor: 0 };
-    const casosPrueba = "rf08.6-04";
 
     // 1. Cargar la pagina inicial
     await page.goto(urlBase + 'web/instructor/home'); //url inicial
