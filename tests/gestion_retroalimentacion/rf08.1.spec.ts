@@ -9,7 +9,8 @@ const storagePath = path.resolve('auth/storageState.json');
 const urlBase = 'https://teammates-orugas.appspot.com/';
 const nombre = "rf08.1";
 const carpetaBase = path.join("capturas","gestion_retroalimentacion",nombre);
-const unico = "003";
+const unico = "005";
+const cursoUsar ={nombre:'jcuadrosam.uns-demo', contenido:'Session with different question types'}
 
 
 // validar el login inicial
@@ -112,7 +113,7 @@ test.only('rf08.1-03 (Crear sesión desde plantilla sin modificar fechas) [Trans
 
     // 4. Rellenar input
     await page.fill('input[id="copy-session-name"]', datos_entrada.name);
-    await page.locator('tr').filter({ hasText: 'jcuadrosam.uns-demo' }).filter({ hasText: 'Session with different question types' }).locator('input[type="radio"]').check();
+    await page.locator('tr').filter({ hasText: cursoUsar.nombre }).filter({ hasText: cursoUsar.contenido }).locator('input[type="radio"]').check();
     await esperaTiempo(1500);
     await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
     
