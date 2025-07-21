@@ -9,7 +9,7 @@ const storagePath = path.resolve('auth/storageState.json');
 const urlBase = 'https://teammates-orugas.appspot.com/';
 const nombre = "rf02.6";
 const carpetaBase = path.join("capturas","gestion_cursos",nombre);
-const unico = "101";
+const unico = "109";
 
 // validar el login inicial
 test.beforeAll(() => {
