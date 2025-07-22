@@ -248,7 +248,7 @@ test.only("rf07.6-03 (Búsqueda por correo electrónico) [EP (valida))]", async 
   await page.getByRole("textbox", { name: "Your search keyword" }).click();
   await page
     .getByRole("textbox", { name: "Your search keyword" })
-    .fill("Búsqueda por nombre completo existente");
+    .fill(datos_entrada.email);
   await page
     .getByRole("textbox", { name: "Your search keyword" })
     .press("Enter");

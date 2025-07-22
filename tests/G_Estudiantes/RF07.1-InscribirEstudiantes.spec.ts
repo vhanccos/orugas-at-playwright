@@ -112,7 +112,6 @@ test.only("rf07.1-01 (Registro correcto de un estudiante mediante formulario) [E
   // 6. Validar la respuesta
   await expect(page.getByRole("alert")).toContainText(
     "Enrollment successful. Summary given below.",
-    { timeout: 10000 },
   );
   await Guardar_imagen(page, carpetaBase, contador, casosPrueba); // Captura tras alerta
 
@@ -182,7 +181,6 @@ test.only("rf07.1-02 (Correo electrónico inválido (falta @)) [EP(invalida)]", 
   // 6. Validar la respuesta
   await expect(page.getByRole("alert")).toContainText(
     "Some students failed to be enrolled, see the summary below.",
-    { timeout: 10000 },
   );
   await Guardar_imagen(page, carpetaBase, contador, casosPrueba); // Captura tras alerta
 
@@ -340,6 +338,5 @@ test.only("rf07.1-04 (Equipo repetido en secciones distintas) [EP(invalida)]", a
   await expect(page.locator("tm-instructor-course-enroll-page")).toContainText(
     "Found duplicated teams in different sections.",
   );
-  await page.getByText(mensajeError).click();
   await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 });
