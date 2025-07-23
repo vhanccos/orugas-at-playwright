@@ -88,6 +88,13 @@ test.only("rf01.4-01 (Aprobación correcta de una solicitud pendiente) [CU]", as
   // 8. Confirmar estado APPROVED en la misma fila
   await expect(filaInstructor).toContainText("APPROVED");
   await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
+
+  // 9. Limpieza: eliminar solicitud aprobada desde admin/search
+  await page.goto(`${urlBase}web/admin/search`);
+  await page.getByRole("textbox", { name: "Search" }).fill(datos_entrada.email);
+  await page.getByRole("textbox", { name: "Search" }).press("Enter");
+  await page.getByRole("button", { name: "Delete account request" }).click();
+  await page.getByRole("button", { name: "Yes" }).click();
 });
 
 test.only("rf01.4-02 (Rechazo de solicitud con motivo) [CU]", async ({
@@ -290,8 +297,8 @@ test.only("rf01.4-05 (Intento de aprobar una solicitud duplicada) [CU]", async (
   page,
 }) => {
   const datos_entrada = {
-    name: "Ana Torres",
-    email: "ana.torres@unsa.edu.pe",
+    name: "Frank Torres",
+    email: "frank.torres@unsa.edu.pe",
     institution: "UNSA",
   };
 
@@ -330,8 +337,14 @@ test.only("rf01.4-05 (Intento de aprobar una solicitud duplicada) [CU]", async (
   await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 
   await segunda.locator('[id^="approve-account-request-"]').click();
-  await expect(page.getByRole("alert")).toContainText(
+
+  const alerta = page.getByRole("alert").first();
+  await expect(alerta).toContainText(
     `An account request with email ${datos_entrada.email} has already been approved. Please reject or delete the account request instead.`,
   );
+
+  // await expect(page.getByRole("alert")).toContainText(
+  //   `An account request with email ${datos_entrada.email} has already been approved. Please reject or delete the account request instead.`,
+  // );
   await Guardar_imagen(page, carpetaBase, contador, casosPrueba);
 });
